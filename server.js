@@ -96,6 +96,12 @@ app.delete('/api/responses/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Local server running smoothly at http://localhost:${PORT}`);
-});
+// Local listening check (conditional so it doesn't conflict with Vercel's serverless wrapper)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Local server running smoothly at http://localhost:${PORT}`);
+  });
+}
+
+// CRITICAL FOR VERCEL SERVERLESS DEPLOYMENTS: Export the Express app
+module.exports = app;
