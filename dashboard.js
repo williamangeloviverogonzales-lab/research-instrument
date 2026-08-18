@@ -16,13 +16,31 @@ async function fetchDashboardData() {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/api/responses');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    const SUPABASE_URL = "https://fkeujqzgqupvjcqreqcs.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_P2-r3rUN2REqf-jHtA-Img_CvegMFFf";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const data = await response.json();
-    cachedData = data || [];
+    const { data, error } = await supabaseClient
+      .from('responses')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (error) throw error;
+
+    // Flatten the JSONB data back out so dashboard can read fields like .school_name, .age, etc.
+    const formattedData = (data || []).map(row => {
+      let parsedData = {};
+      if (row.data) {
+        parsedData = typeof row.data === 'object' ? row.data : JSON.parse(row.data);
+      }
+      return {
+        id: row.id,
+        created_at: row.created_at,
+        ...parsedData
+      };
+    });
+
+    cachedData = formattedData;
     
     // Compute duplicates and cache their IDs
     const duplicates = detectPotentialDuplicates(cachedData);
@@ -37,7 +55,7 @@ async function fetchDashboardData() {
   } catch (err) {
     console.error('Error fetching dashboard data:', err);
     if (tableBody) {
-      tableBody.innerHTML = `<tr><td colspan="100" style="text-align: center; color: var(--error-color);">Failed to load data. Make sure your local server is running.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="100" style="text-align: center; color: var(--error-color);">Failed to load data. Please check your internet connection.</td></tr>`;
     }
   }
 }
@@ -223,23 +241,22 @@ async function deleteResponse(id) {
   if (!confirmed) return;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/responses/${id}`, {
-      method: 'DELETE'
-    });
+    const SUPABASE_URL = "https://fkeujqzgqupvjcqreqcs.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_P2-r3rUN2REqf-jHtA-Img_CvegMFFf";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    if (!response.ok) {
-      throw new Error('Failed to delete response from server');
-    }
+    const { error } = await supabaseClient
+      .from('responses')
+      .delete()
+      .eq('id', Number(id));
 
-    const result = await response.json();
-    if (result.success) {
-      fetchDashboardData();
-    } else {
-      alert('Could not delete the response.');
-    }
+    if (error) throw error;
+
+    // Refresh dashboard view
+    fetchDashboardData();
   } catch (err) {
     console.error('Delete error:', err);
-    alert('Error connecting to server while trying to delete.');
+    alert('Error connecting to database while trying to delete.');
   }
 }
 
