@@ -371,43 +371,44 @@ Thank you for supporting graduate school research in our division!`;
       feedback_barrier: document.getElementById('feedbackBarrier')?.value || ''
     };
 
-
     let visitorId = localStorage.getItem('latex_survey_visitor_id');
     if (!visitorId) {
       visitorId = 'dev_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
       localStorage.setItem('latex_survey_visitor_id', visitorId);
     }
     
-    // Attach it to the payload so server.js receives it
     payload.visitor_id = visitorId;
 
     try {
-      const response = await fetch('/api/responses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      // Direct Supabase Client Insertion (Matches your server's table structure: id, created_at, data)
+      const SUPABASE_URL = "https://fkeujqzgqupvjcqreqcs.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_P2-r3rUN2REqf-jHtA-Img_CvegMFFf";
+      
+      // Ensure Supabase CDN script is loaded or use window.supabase
+      const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      const newEntry = {
+        id: Date.now(),
+        created_at: new Date().toISOString(),
+        data: payload
+      };
 
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error('Server reported failure');
-      }
+      const { error } = await supabaseClient
+        .from('responses')
+        .insert([newEntry]);
+
+      if (error) throw error;
 
       const shareTextarea = document.getElementById('shareTextMessage');
       if (shareTextarea) {
         shareTextarea.value = SHARE_MESSAGE;
       }
 
+      clearDraft(); // Clear local storage draft upon success
       goToStep(6);
     } catch (err) {
       console.error('Submission Error:', err);
-      alert('Failed to submit response. Please check if your local server is running and try again.');
+      alert('Failed to submit response. Please check your internet connection and try again.');
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Response';
