@@ -16,6 +16,16 @@ const SUPABASE_URL = "https://fkeujqzgqupvjcqreqcs.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_P2-r3rUN2REqf-jHtA-Img_CvegMFFf";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Shortcut Route for Main Survey Page (Fixes "Cannot GET /")
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Shortcut Route for Dashboard
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
 // API Endpoint: Submit Survey Response
 app.post('/api/responses', async (req, res) => {
   try {
@@ -66,11 +76,6 @@ app.get('/api/responses', async (req, res) => {
     console.error("Fetch error:", err);
     res.status(500).json({ error: err.message });
   }
-});
-
-// Shortcut Route for Dashboard
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dashboard.html'));
 });
 
 // API Endpoint: Delete Survey Response by ID
