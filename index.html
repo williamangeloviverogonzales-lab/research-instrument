@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaTeX Adoption Survey | Graduate School Research</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- MATHJAX CDN FOR FORMULA RENDERING -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="survey-container">
+    <!-- Floating Upper-Right Save Status Badge -->
+<div id="floatingSaveStatus" style="position: fixed; top: 16px; right: 20px; font-size: 0.72rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.9); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); opacity: 0; transition: opacity 0.3s ease; z-index: 9999; pointer-events: none;">
+  All changes saved
+</div>
+    
+    <header class="survey-header">
+      <div class="institution-title">Catanduanes State University — Graduate School</div>
+      <h1 class="survey-title">EXPLORING THE ADOPTION OF LaTeX AMONG HIGH SCHOOL MATHEMATICS TEACHERS IN CATANDUANES: A UNIFIED THEORY OF ACCEPTANCE AND USE OF TECHNOLOGY MODEL-BASED STUDY</h1>
+      <span class="target-badge">Target Audience: High School Mathematics Teachers</span>
+      
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar-fill"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+  <div id="saveStatus" style="font-size: 0.75rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s ease;">
+    All changes saved
+  </div>
+  <div id="stepCounterText" style="text-align: right; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">
+    Step 1 of 5: Consent
+  </div>
+</div>
+    </header>
+
+    <form id="surveyForm" onsubmit="event.preventDefault();">
+
+      <!-- STEP 1: WELCOME & CONSENT -->
+      <div id="step1" class="wizard-step active">
+        <h2 class="section-title">Welcome & Informed Consent</h2>
+        
+        <p class="mb-14">
+          Dear Mathematics Teachers,<br><br>
+          The undersigned is presently conducting a research study entitled <strong>EXPLORING THE ADOPTION OF LaTeX AMONG HIGH SCHOOL MATHEMATICS TEACHERS IN CATANDUANES: A UNIFIED THEORY OF ACCEPTANCE AND USE OF TECHNOLOGY MODEL-BASED STUDY</strong>. This study aims to understand factors influencing the adoption of LaTeX among high school mathematics teachers. Whether you are a regular LaTeX user, have tried it once, or have never used it, your perspectives are valuable.
+        </p>
+
+        <p class="mb-14">
+          Participation is voluntary. Your responses are anonymous and will be used solely for academic research purposes. This survey will take approximately <strong>10–15 minutes</strong> to complete.
+        </p>
+
+        <p class="mb-14" style="text-align: right; font-weight: 700; color: var(--text-main);">
+          WILLIAM ANGELO V. GONZALES<br>
+          <span style="font-weight: 500; color: var(--text-muted);">Researcher</span>
+        </p>
+
+        <details>
+          <summary>📄 View Official DepEd Division Approval Permit</summary>
+          <div class="accordion-preview-body">
+            <p class="preview-caption">Division of Catanduanes Approval Letter Preview:</p>
+            <img src="assets/deped_approval.png" alt="DepEd Approval Permit" class="img-preview" onerror="this.src='https://via.placeholder.com/600x800?text=DepEd+Division+Approval+Permit+Image';">
+            
+            <div class="pdf-download-action">
+              <a href="assets/deped_approval.pdf" download target="_blank" class="btn-download">
+                📥 Download Official DepEd Permit (PDF)
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <div class="q-card mt-20">
+          <label class="checkbox-label">
+            <input type="checkbox" id="consentCheck" required>
+            <span>I confirm that I am a High School Mathematics Teacher in Catanduanes and agree to participate in this study.</span>
+          </label>
+        </div>
+
+        <div class="btn-group justify-end">
+          <button type="button" id="step1Btn" class="btn btn-primary">Proceed to Part I →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: PART I -->
+      <div id="step2" class="wizard-step">
+        <h2 class="section-title">Part I: Demographic and Background Information</h2>
+        <p class="matrix-subtext">Please provide the following information by selecting the appropriate option or filling in the blank space.</p>
+
+        <div class="form-group">
+          <label class="form-label">1. Respondent Name (Optional):</label>
+          <input type="text" id="respondentName" class="form-control" placeholder="Your Name (Optional)">
+        </div>
+
+        <div class="form-group q-card">
+  <label class="form-label">2. School Information:</label>
+  <div class="form-group" style="margin-bottom: 12px;">
+    <div class="autocomplete-container" style="position: relative;">
+      <label for="school_name" style="font-size: 0.88rem; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; display: block;">School Name:</label>
+      <input type="text" id="school_name" name="school_name" class="form-control" placeholder="Type school name..." autocomplete="off" required>
+      <div id="schoolSuggestions" class="suggestions-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 0 0 6px 6px; max-height: 180px; overflow-y: auto; z-index: 1000; display: none; box-shadow: var(--shadow-md);"></div>
+    </div>
+  </div>
+  <label style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">School Type / Sector:</label>
+  <div class="radio-group inline-radios">
+    <label class="radio-label"><input type="radio" name="schoolSector" value="Public" required> Public</label>
+    <label class="radio-label"><input type="radio" name="schoolSector" value="Private" required> Private</label>
+  </div>
+</div>
+
+        <div class="form-group">
+          <label class="form-label">3. Gender:</label>
+          <div class="radio-group inline-radios">
+            <label class="radio-label"><input type="radio" name="gender" value="Male" required> Male</label>
+            <label class="radio-label"><input type="radio" name="gender" value="Female" required> Female</label>
+            <label class="radio-label"><input type="radio" name="gender" value="Prefer not to say" required> Prefer not to say</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">4. Age:</label>
+          <input type="number" id="age" name="age" class="form-control w-150" placeholder="Years" min="20" max="75" required>
+        </div>
+
+        <div class="form-group" style="position: relative;">
+  <label for="municipality" class="form-label">5. Municipality:</label>
+  <input type="text" id="municipality" name="municipality" class="form-control" placeholder="Type or search municipality..." autocomplete="off" required>
+  <div id="municipalitySuggestions" class="suggestions-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 0 0 6px 6px; max-height: 180px; overflow-y: auto; z-index: 1000; display: none; box-shadow: var(--shadow-md);"></div>
+</div>
+
+        <div class="form-group q-card">
+          <label class="form-label">6. Subjects Taught:</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="subjectsTaught" value="Mathematics only" id="subjMathOnly" required> 
+              Mathematics only
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="subjectsTaught" value="Mathematics and other subjects" id="subjMathOther" required> 
+              Mathematics and other subjects
+            </label>
+          </div>
+          <div id="otherSubjectsContainer" class="d-none" style="margin-top: 10px;">
+            <input type="text" id="otherSubjectsDetails" class="form-control" placeholder="Please specify other subjects taught...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">7. Years Teaching Mathematics:</label>
+          <input type="number" id="yearsTeachingMath" name="yearsTeachingMath" class="form-control w-150" placeholder="Years" step="0.5" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">8. Have you been a part of a team to produce Mathematics Instructional Materials?</label>
+          <div class="radio-group inline-radios">
+            <label class="radio-label"><input type="radio" name="producedIMTeam" value="Yes" required> Yes</label>
+            <label class="radio-label"><input type="radio" name="producedIMTeam" value="No" required> No</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">9. Years of Experience in Creating Mathematics Instructional Materials:</label>
+          <input type="number" id="yearsIMExperience" name="yearsIMExperience" class="form-control w-150" placeholder="Years" step="0.5" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">10. Highest Educational Attainment:</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="highestEducation" value="Bachelor's Degree" required> Bachelor's Degree</label>
+            <label class="radio-label"><input type="radio" name="highestEducation" value="With Master's Degree Units" required> With Master's Degree Units</label>
+            <label class="radio-label"><input type="radio" name="highestEducation" value="Master's Degree" required> Master's Degree</label>
+            <label class="radio-label"><input type="radio" name="highestEducation" value="With Doctoral Degree Units" required> With Doctoral Degree Units</label>
+            <label class="radio-label"><input type="radio" name="highestEducation" value="Doctoral Degree" required> Doctoral Degree</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">11. Type of Internet Access at School:</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="internetAccess" value="Stable" required> Stable</label>
+            <label class="radio-label"><input type="radio" name="internetAccess" value="Limited" required> Limited</label>
+            <label class="radio-label"><input type="radio" name="internetAccess" value="Very Limited" required> Very Limited</label>
+            <label class="radio-label"><input type="radio" name="internetAccess" value="None" required> None</label>
+          </div>
+        </div>
+
+        <div class="form-group q-card border-accent">
+          <label class="form-label">12. Have you ever used LaTeX before?</label>
+          <div class="radio-group inline-radios">
+            <label class="radio-label"><input type="radio" name="usedLatex" value="Yes" required> Yes</label>
+            <label class="radio-label"><input type="radio" name="usedLatex" value="No" required> No</label>
+          </div>
+        </div>
+
+        <div id="q13Container" class="form-group d-none q-card">
+          <label class="form-label">13. If YES to Question 12, how long have you been using LaTeX for any mathematics-related work (instructional or academic)?</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="latexDuration" value="Less than 1 year"> Less than 1 year</label>
+            <label class="radio-label"><input type="radio" name="latexDuration" value="1 to 3 years"> 1 to 3 years</label>
+            <label class="radio-label"><input type="radio" name="latexDuration" value="More than 3 years"> More than 3 years</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">14. Current Status of LaTeX Use in your school or department:</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="latexSchoolStatus" value="Mandatory (Required to use)" required> Mandatory (Required to use)</label>
+            <label class="radio-label"><input type="radio" name="latexSchoolStatus" value="Recommended (Encouraged to use)" required> Recommended (Encouraged to use)</label>
+            <label class="radio-label"><input type="radio" name="latexSchoolStatus" value="Voluntary/Personal Choice (No official recommendation)" required> Voluntary/Personal Choice (No official recommendation)</label>
+            <label class="radio-label"><input type="radio" name="latexSchoolStatus" value="Not Applicable (The school/department has no policy or knowledge of LaTeX)" required> Not Applicable (The school/department has no policy or knowledge of LaTeX)</label>
+          </div>
+        </div>
+
+        <div class="form-group q-card">
+          <label class="form-label">15. What is the PRIMARY method you currently use to create mathematics instructional materials (exams, worksheets, etc.)? Select ONE option that you use most often.</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="Handwritten documents (photocopied/scanned)" required> Handwritten documents (photocopied/scanned)</label>
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="Microsoft Word (using built-in Equation Editor)" required> Microsoft Word (using built-in Equation Editor)</label>
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="Google Docs (using built-in Equation Tools)" required> Google Docs (using built-in Equation Tools)</label>
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="Specialized paid software (e.g., MathType, Adobe InDesign, Publisher)" required> Specialized paid software (e.g., MathType, Adobe InDesign, Publisher)</label>
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="LaTeX" required> LaTeX</label>
+            <label class="radio-label"><input type="radio" name="primaryIMMethod" value="Other" id="primaryIMMethodOtherRadio" required> Other (Please specify)</label>
+          </div>
+          <div id="primaryIMOtherContainer" class="d-none" style="margin-top: 10px;">
+            <input type="text" id="primaryIMMethodOtherDetails" class="form-control" placeholder="Specify other primary method...">
+          </div>
+        </div>
+
+        <h3 class="section-title mt-30 fs-1rem">16. Regarding the method you selected in Question 15, how much difficulty do you typically experience with the following aspects of mathematics document preparation?</h3>
+        <p class="matrix-subtext">Scale Key: 1 = Very Low, 2 = Low, 3 = Moderate, 4 = High, 5 = Very High</p>
+
+        <!-- Q16a -->
+        <div class="q-card">
+          <label class="form-label">
+            16a. Writing or typing basic mathematical expressions (e.g., fractions, exponents, subscripts, square roots).
+            <span class="info-icon" data-info="info-16a">ⓘ</span>
+          </label>
+          <div id="info-16a" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in inserting and typing standard mathematical notation like fractions, exponents, or square roots in your primary tool.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16a_1" name="diff_16a" value="1" required><label for="diff_16a_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16a_2" name="diff_16a" value="2" required><label for="diff_16a_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16a_3" name="diff_16a" value="3" required><label for="diff_16a_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16a_4" name="diff_16a" value="4" required><label for="diff_16a_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16a_5" name="diff_16a" value="5" required><label for="diff_16a_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16b -->
+        <div class="q-card">
+          <label class="form-label">
+            16b. Achieving precise vertical alignment of equal signs across multiple steps of a solution.
+            <span class="info-icon" data-info="info-16b">ⓘ</span>
+          </label>
+          <div id="info-16b" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in aligning consecutive lines of mathematical derivations along equal signs (=) across multi-step calculations.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16b_1" name="diff_16b" value="1" required><label for="diff_16b_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16b_2" name="diff_16b" value="2" required><label for="diff_16b_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16b_3" name="diff_16b" value="3" required><label for="diff_16b_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16b_4" name="diff_16b" value="4" required><label for="diff_16b_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16b_5" name="diff_16b" value="5" required><label for="diff_16b_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16c -->
+        <div class="q-card">
+          <label class="form-label">
+            16c. Producing high-quality geometry diagrams (angles, triangles, shapes).
+            <span class="info-icon" data-info="info-16c">ⓘ</span>
+          </label>
+          <div id="info-16c" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in drawing or embedding clear geometric figures with proper labels and angle arcs.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16c_1" name="diff_16c" value="1" required><label for="diff_16c_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16c_2" name="diff_16c" value="2" required><label for="diff_16c_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16c_3" name="diff_16c" value="3" required><label for="diff_16c_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16c_4" name="diff_16c" value="4" required><label for="diff_16c_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16c_5" name="diff_16c" value="5" required><label for="diff_16c_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16d -->
+        <div class="q-card">
+          <label class="form-label">
+            16d. Producing high-quality graphs/plots (Cartesian plane, functions).
+            <span class="info-icon" data-info="info-16d">ⓘ</span>
+          </label>
+          <div id="info-16d" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in plotting accurate Cartesian axes, function curves, or shaded inequality regions.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16d_1" name="diff_16d" value="1" required><label for="diff_16d_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16d_2" name="diff_16d" value="2" required><label for="diff_16d_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16d_3" name="diff_16d" value="3" required><label for="diff_16d_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16d_4" name="diff_16d" value="4" required><label for="diff_16d_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16d_5" name="diff_16d" value="5" required><label for="diff_16d_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16e -->
+        <div class="q-card">
+          <label class="form-label">
+            16e. Maintaining uniform formatting (fonts, numbering, spacing) across different materials (e.g., modules, instructional materials).
+            <span class="info-icon" data-info="info-16e">ⓘ</span>
+          </label>
+          <div id="info-16e" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty keeping font sizes, line spacing, margins, and question numbers consistent throughout multi-page documents.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16e_1" name="diff_16e" value="1" required><label for="diff_16e_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16e_2" name="diff_16e" value="2" required><label for="diff_16e_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16e_3" name="diff_16e" value="3" required><label for="diff_16e_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16e_4" name="diff_16e" value="4" required><label for="diff_16e_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16e_5" name="diff_16e" value="5" required><label for="diff_16e_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16f -->
+        <div class="q-card">
+          <label class="form-label">
+            16f. Managing long tables or lists that need to break cleanly across multiple pages, and including formulas or special symbols in tables.
+            <span class="info-icon" data-info="info-16f">ⓘ</span>
+          </label>
+          <div id="info-16f" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in formatting tables containing math symbols that split across page boundaries without disrupting page layout.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16f_1" name="diff_16f" value="1" required><label for="diff_16f_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16f_2" name="diff_16f" value="2" required><label for="diff_16f_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16f_3" name="diff_16f" value="3" required><label for="diff_16f_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16f_4" name="diff_16f" value="4" required><label for="diff_16f_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16f_5" name="diff_16f" value="5" required><label for="diff_16f_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16g -->
+        <div class="q-card">
+          <label class="form-label">
+            16g. Creating mathematics exams or quizzes (numbering, multiple-choice formatting, and answer keys).
+            <span class="info-icon" data-info="info-16g">ⓘ</span>
+          </label>
+          <div id="info-16g" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in setting up automated question numbering, multi-column choice options (A, B, C, D), and answer keys.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16g_1" name="diff_16g" value="1" required><label for="diff_16g_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16g_2" name="diff_16g" value="2" required><label for="diff_16g_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16g_3" name="diff_16g" value="3" required><label for="diff_16g_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16g_4" name="diff_16g" value="4" required><label for="diff_16g_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16g_5" name="diff_16g" value="5" required><label for="diff_16g_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16h -->
+        <div class="q-card">
+          <label class="form-label">
+            16h. Integrating external content or resources (images, formulas, or examples from textbooks or online sources) into instructional materials.
+            <span class="info-icon" data-info="info-16h">ⓘ</span>
+          </label>
+          <div id="info-16h" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty in pasting or embedding external graphics, figures, or textbook formulas without breaking surrounding document text.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16h_1" name="diff_16h" value="1" required><label for="diff_16h_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16h_2" name="diff_16h" value="2" required><label for="diff_16h_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16h_3" name="diff_16h" value="3" required><label for="diff_16h_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16h_4" name="diff_16h" value="4" required><label for="diff_16h_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16h_5" name="diff_16h" value="5" required><label for="diff_16h_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16i -->
+        <div class="q-card">
+          <label class="form-label">
+            16i. Collaborating with colleagues to create or edit shared instructional materials.
+            <span class="info-icon" data-info="info-16i">ⓘ</span>
+          </label>
+          <div id="info-16i" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty co-editing or sharing editable document files with other math teachers without formatting distortions.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16i_1" name="diff_16i" value="1" required><label for="diff_16i_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16i_2" name="diff_16i" value="2" required><label for="diff_16i_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16i_3" name="diff_16i" value="3" required><label for="diff_16i_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16i_4" name="diff_16i" value="4" required><label for="diff_16i_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16i_5" name="diff_16i" value="5" required><label for="diff_16i_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16j -->
+        <div class="q-card">
+          <label class="form-label">
+            16j. Updating existing instructional materials without losing formatting or content integrity.
+            <span class="info-icon" data-info="info-16j">ⓘ</span>
+          </label>
+          <div id="info-16j" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty modifying existing test questions or modules in future school terms without shifting layout alignments.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16j_1" name="diff_16j" value="1" required><label for="diff_16j_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16j_2" name="diff_16j" value="2" required><label for="diff_16j_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16j_3" name="diff_16j" value="3" required><label for="diff_16j_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16j_4" name="diff_16j" value="4" required><label for="diff_16j_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16j_5" name="diff_16j" value="5" required><label for="diff_16j_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q16k -->
+        <div class="q-card">
+          <label class="form-label">
+            16k. Exporting or sharing documents in digital formats (PDF, Word, Google Docs) while maintaining quality.
+            <span class="info-icon" data-info="info-16k">ⓘ</span>
+          </label>
+          <div id="info-16k" class="clarification-box">
+            <strong>💡 Clarification:</strong> Difficulty converting your final document into printable PDF or digital forms without corrupting math symbols.
+          </div>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Very Low</span><span>3 - Moderate</span><span>5 - Very High</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="diff_16k_1" name="diff_16k" value="1" required><label for="diff_16k_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16k_2" name="diff_16k" value="2" required><label for="diff_16k_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16k_3" name="diff_16k" value="3" required><label for="diff_16k_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16k_4" name="diff_16k" value="4" required><label for="diff_16k_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="diff_16k_5" name="diff_16k" value="5" required><label for="diff_16k_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">16l. Other Difficulty (Optional):</label>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Please describe any other specific difficulties or challenges you regularly encounter when preparing mathematics instructional materials that were not listed above.</p>
+          <textarea id="diff16lOther" class="form-control" rows="3" placeholder="Describe other challenges..."></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" id="backToStep1">← Back</button>
+          <button type="button" class="btn btn-primary" id="goToStep3">Proceed to Overview →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: LATEX OVERVIEW & LIVE EXAMPLES -->
+      <div id="step3" class="wizard-step tex2jax_process">
+        <h2 class="section-title">Technical Overview: What is LaTeX?</h2>
+
+        <p class="mb-14">
+          <strong>LaTeX</strong> (pronounced "Lay-tech") is a high-quality document preparation system specifically designed for mathematical, scientific, and technical documents. Unlike traditional word processors (where you drag or use equation toolbars), LaTeX allows teachers to write plain text markup code that compiles into publication-ready PDF documents.
+        </p>
+
+        <h3 class="section-title fs-1rem mt-20" style="color: var(--accent-teal);">💡 Key Capabilities & Interactive Examples</h3>
+        <p class="utaut-subtext">Below are live examples demonstrating how simple LaTeX code translates directly into rendered mathematical expressions, derivations, geometry figures, and Cartesian graphs.</p>
+
+        <!-- EXAMPLE 1: BASIC MATHEMATICAL FORMULAS -->
+        <div class="example-card">
+          <div class="example-title">1. Standard Mathematical Formulas (Quadratic Formula)</div>
+          <div class="code-output-grid">
+            <div class="code-box">
+              <span class="code-box-label">LaTeX Code:</span>
+              <pre>x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}</pre>
+            </div>
+            <div class="output-box">
+              <span class="code-box-label">Rendered Output:</span>
+              <div class="rendered-math">
+                $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAMPLE 2: PIECEWISE / CONDITIONAL EQUATIONS -->
+        <div class="example-card">
+          <div class="example-title">2. Piecewise / Conditional Functions</div>
+          <div class="code-output-grid">
+            <div class="code-box">
+              <span class="code-box-label">LaTeX Code:</span>
+              <pre>f(x) = \begin{cases} 
+x^2, & \text{if } x \ge 0 \\ 
+-x, & \text{if } x < 0 
+\end{cases}</pre>
+            </div>
+            <div class="output-box">
+              <span class="code-box-label">Rendered Output:</span>
+              <div class="rendered-math">
+                $$f(x) = \begin{cases} x^2, & \text{if } x \ge 0 \\ -x, & \text{if } x < 0 \end{cases}$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAMPLE 3: MULTILINE DERIVATION ALIGNED AT EQUAL SIGNS -->
+        <div class="example-card">
+          <div class="example-title">3. Multiline Solution Aligned at Equal Signs</div>
+          <div class="code-output-grid">
+            <div class="code-box">
+              <span class="code-box-label">LaTeX Code:</span>
+              <pre>\begin{align*}
+(x + 3)^2 &= x^2 + 2(x)(3) + 3^2 \\
+          &= x^2 + 6x + 9
+\end{align*}</pre>
+            </div>
+            <div class="output-box">
+              <span class="code-box-label">Rendered Output:</span>
+              <div class="rendered-math">
+                \begin{align*}
+                (x + 3)^2 &= x^2 + 2(x)(3) + 3^2 \\
+                          &= x^2 + 6x + 9
+                \end{align*}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAMPLE 4: GEOMETRIC DIAGRAM -->
+        <div class="example-card">
+          <div class="example-title">4. Geometric Diagram (Right Triangle with Angle Label)</div>
+          <div class="code-output-grid">
+            <div class="code-box">
+              <span class="code-box-label">LaTeX (TikZ) Code:</span>
+              <pre>\begin{tikzpicture}[scale=0.75]
+  \draw[thick] (0,0) node[anchor=north east]{$A$} -- (4,0) node[anchor=north west]{$C$} -- (4,3) node[anchor=south west]{$B$} -- cycle;
+  \draw (3.6,0) -- (3.6,0.4) -- (4,0.4);
+  \node at (2,-0.4) {$b = 4$};
+  \node at (4.8,1.5) {$a = 3$};
+  \node at (1.6,1.8) {$c = 5$};
+\end{tikzpicture}</pre>
+            </div>
+            <div class="output-box text-center">
+              <span class="code-box-label">Rendered Output (Compiled LaTeX):</span>
+              <div class="rendered-diagram">
+                <img src="assets/tikz_triangle.png" 
+                     alt="Compiled TikZ Right Triangle" 
+                     style="max-width: 100%; height: auto; padding: 10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAMPLE 5: CARTESIAN PLANE & FUNCTION GRAPH -->
+        <div class="example-card">
+          <div class="example-title">5. Cartesian Plane & Function Graph ($y = x^2 - 4$)</div>
+          <div class="code-output-grid">
+            <div class="code-box">
+              <span class="code-box-label">LaTeX (TikZ/PGFPlots) Code:</span>
+              <pre>\begin{tikzpicture}
+\begin{axis}[
+  axis equal image,
+  axis lines=center,
+  xlabel={$x$}, ylabel={$y$},
+  xmin=-5, xmax=5, ymin=-5, ymax=5,
+  xtick={-4,-2,0,2,4}, ytick={-4,-2,0,2,4},
+  tick label style={font=\tiny},
+  grid=both, minor tick num=1,
+  major grid style={line width=0.4pt, draw=gray!40},
+  minor grid style={line width=0.4pt, draw=gray!40}
+]
+\addplot[domain=-3:3, samples=100, blue, very thick]{x^2 - 4};
+\node[blue] at (axis cs: 2.2, 2) {$y = x^2 - 4$};
+\end{axis}
+\end{tikzpicture}</pre>
+            </div>
+            <div class="output-box text-center">
+              <span class="code-box-label">Rendered Output (Compiled LaTeX):</span>
+              <div class="rendered-diagram">
+                <img src="assets/tikz_parabola.png" 
+                     alt="Compiled TikZ Parabola Graph" 
+                     style="max-width: 100%; height: auto; padding: 10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FULL DOCUMENT PREVIEWS -->
+        <h3 class="section-title fs-1rem mt-30" style="color: var(--primary);">📄 Full Sample Instructional Documents</h3>
+        <p class="utaut-subtext">Click below to preview or download complete documents formatted entirely using LaTeX:</p>
+
+        <details>
+          <summary>📄 View Sample Mathematics Exam Created in LaTeX</summary>
+          <div class="accordion-preview-body">
+            <p class="preview-caption">Sample Calculus Exam Document:</p>
+            <img src="assets/sample_exam.png" alt="Sample LaTeX Exam" class="img-preview" onerror="this.src='https://via.placeholder.com/600x750?text=Sample+LaTeX+Math+Exam+Preview';">
+            
+            <div class="pdf-download-action">
+              <a href="assets/sample_exam.pdf" download target="_blank" class="btn-download">
+                📥 Download Sample Exam Document (PDF)
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>📚 View Sample Learning Module Created in LaTeX</summary>
+          <div class="accordion-preview-body">
+            <p class="preview-caption">Sample Instructional Module Document:</p>
+            <img src="assets/sample_module.png" alt="Sample LaTeX Module" class="img-preview" onerror="this.src='https://via.placeholder.com/600x750?text=Sample+LaTeX+Instructional+Module+Preview';">
+            
+            <div class="pdf-download-action">
+              <a href="assets/sample_module.pdf" download target="_blank" class="btn-download">
+                📥 Download Sample Learning Module (PDF)
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" id="backToStep2">← Back</button>
+          <button type="button" class="btn btn-primary" id="goToStep4">Proceed to Part II →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: PART II -->
+      <div id="step4" class="wizard-step">
+        <h2 class="section-title">Part II: Unified Theory of Acceptance and Use of Technology Constructs</h2>
+
+        <!-- COMBINED STICKY CARD -->
+        <div class="q-card border-accent sticky-guidance mb-14" style="padding: 14px; background: var(--card-bg);">
+            <strong style="color: var(--primary);">GUIDANCE FOR RESPONDING:</strong>
+            <p id="utautGuidanceText" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
+                <!-- JavaScript populates guidance text here -->
+            </p>
+
+            <!-- MID-SURVEY ENCOURAGEMENT (HIDDEN BY DEFAULT) -->
+            <div id="midEncouragement" class="d-none" style="margin-top: 10px; padding: 8px 12px; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; border-radius: 6px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.4s ease-in-out;">
+              <span>⏱️</span>
+              <span>You are more than halfway done! Only a few quick rating items remaining.</span>
+            </div>
+        </div>
+        <p class="utaut-subtext">Scale Key: 1 = Strongly Disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly Agree</p>
+        
+        <!-- A. PE -->
+        <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">A. Performance Expectancy (PE)</h3>
+        
+        <div class="q-card">
+          <label class="form-label">1. (PE1) I would find LaTeX useful in my mathematical instruction.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="pe1_1" name="pe1" value="1" required><label for="pe1_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="pe1_2" name="pe1" value="2" required><label for="pe1_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="pe1_3" name="pe1" value="3" required><label for="pe1_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="pe1_4" name="pe1" value="4" required><label for="pe1_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="pe1_5" name="pe1" value="5" required><label for="pe1_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">2. (PE2) Using LaTeX would enable me to produce math materials more quickly.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="pe2_1" name="pe2" value="1" required><label for="pe2_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="pe2_2" name="pe2" value="2" required><label for="pe2_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="pe2_3" name="pe2" value="3" required><label for="pe2_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="pe2_4" name="pe2" value="4" required><label for="pe2_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="pe2_5" name="pe2" value="5" required><label for="pe2_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">3. (PE3) Using LaTeX would increase my productivity in preparing math documents.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="pe3_1" name="pe3" value="1" required><label for="pe3_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="pe3_2" name="pe3" value="2" required><label for="pe3_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="pe3_3" name="pe3" value="3" required><label for="pe3_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="pe3_4" name="pe3" value="4" required><label for="pe3_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="pe3_5" name="pe3" value="5" required><label for="pe3_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">4. (PE4) Using LaTeX would make it easier to prepare mathematical materials.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="pe4_1" name="pe4" value="1" required><label for="pe4_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="pe4_2" name="pe4" value="2" required><label for="pe4_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="pe4_3" name="pe4" value="3" required><label for="pe4_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="pe4_4" name="pe4" value="4" required><label for="pe4_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="pe4_5" name="pe4" value="5" required><label for="pe4_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B. EE -->
+        <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">B. Effort Expectancy (EE)</h3>
+
+        <div class="q-card">
+          <label class="form-label">5. (EE1) Learning to use LaTeX would be easy for me.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="ee1_1" name="ee1" value="1" required><label for="ee1_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="ee1_2" name="ee1" value="2" required><label for="ee1_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="ee1_3" name="ee1" value="3" required><label for="ee1_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="ee1_4" name="ee1" value="4" required><label for="ee1_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="ee1_5" name="ee1" value="5" required><label for="ee1_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">6. (EE2) I expect my interaction with LaTeX would be clear and understandable.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="ee2_1" name="ee2" value="1" required><label for="ee2_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="ee2_2" name="ee2" value="2" required><label for="ee2_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="ee2_3" name="ee2" value="3" required><label for="ee2_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="ee2_4" name="ee2" value="4" required><label for="ee2_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="ee2_5" name="ee2" value="5" required><label for="ee2_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">7. (EE3) It would be easy for me to become skillful at using LaTeX.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="ee3_1" name="ee3" value="1" required><label for="ee3_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="ee3_2" name="ee3" value="2" required><label for="ee3_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="ee3_3" name="ee3" value="3" required><label for="ee3_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="ee3_4" name="ee3" value="4" required><label for="ee3_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="ee3_5" name="ee3" value="5" required><label for="ee3_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">8. (EE4) I would find LaTeX to be flexible to work with for math formatting.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="ee4_1" name="ee4" value="1" required><label for="ee4_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="ee4_2" name="ee4" value="2" required><label for="ee4_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="ee4_3" name="ee4" value="3" required><label for="ee4_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="ee4_4" name="ee4" value="4" required><label for="ee4_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="ee4_5" name="ee4" value="5" required><label for="ee4_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C. SI -->
+        <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">C. Social Influence (SI)</h3>
+
+        <div class="q-card">
+          <label class="form-label">9. (SI1) People who influence my behavior think I should use LaTeX.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="si1_1" name="si1" value="1" required><label for="si1_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="si1_2" name="si1" value="2" required><label for="si1_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="si1_3" name="si1" value="3" required><label for="si1_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="si1_4" name="si1" value="4" required><label for="si1_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="si1_5" name="si1" value="5" required><label for="si1_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">10. (SI2) People who are important to me think I should use LaTeX.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="si2_1" name="si2" value="1" required><label for="si2_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="si2_2" name="si2" value="2" required><label for="si2_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="si2_3" name="si2" value="3" required><label for="si2_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="si2_4" name="si2" value="4" required><label for="si2_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="si2_5" name="si2" value="5" required><label for="si2_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">11. (SI3) My institution/department would be helpful in the use of LaTeX.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="si3_1" name="si3" value="1" required><label for="si3_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="si3_2" name="si3" value="2" required><label for="si3_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="si3_3" name="si3" value="3" required><label for="si3_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="si3_4" name="si3" value="4" required><label for="si3_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="si3_5" name="si3" value="5" required><label for="si3_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- D. FC -->
+        <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">D. Facilitating Conditions (FC)</h3>
+
+        <div class="q-card">
+          <label class="form-label">12. (FC1) I have the resources necessary to use LaTeX (e.g., computer, software).</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="fc1_1" name="fc1" value="1" required><label for="fc1_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="fc1_2" name="fc1" value="2" required><label for="fc1_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="fc1_3" name="fc1" value="3" required><label for="fc1_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="fc1_4" name="fc1" value="4" required><label for="fc1_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="fc1_5" name="fc1" value="5" required><label for="fc1_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">13. (FC2) I have the knowledge necessary to use LaTeX.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="fc2_1" name="fc2" value="1" required><label for="fc2_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="fc2_2" name="fc2" value="2" required><label for="fc2_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="fc2_3" name="fc2" value="3" required><label for="fc2_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="fc2_4" name="fc2" value="4" required><label for="fc2_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="fc2_5" name="fc2" value="5" required><label for="fc2_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <label class="form-label">14. (FC3) A specific person (or group) is available for assistance with LaTeX difficulties.</label>
+          <div class="likert-container">
+            <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+            <div class="likert-options">
+              <div class="likert-chip"><input type="radio" id="fc3_1" name="fc3" value="1" required><label for="fc3_1">1</label></div>
+              <div class="likert-chip"><input type="radio" id="fc3_2" name="fc3" value="2" required><label for="fc3_2">2</label></div>
+              <div class="likert-chip"><input type="radio" id="fc3_3" name="fc3" value="3" required><label for="fc3_3">3</label></div>
+              <div class="likert-chip"><input type="radio" id="fc3_4" name="fc3" value="4" required><label for="fc3_4">4</label></div>
+              <div class="likert-chip"><input type="radio" id="fc3_5" name="fc3" value="5" required><label for="fc3_5">5</label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- E. BI -->
+        <div id="sectionBI">
+          <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">
+            E. Behavioral Intention (BI)
+          </h3>
+
+          <div class="q-card">
+            <label class="form-label">15. (BI1) I intend to use LaTeX in the next 6 months.</label>
+            <div class="likert-container">
+              <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+              <div class="likert-options">
+                <div class="likert-chip"><input type="radio" id="bi1_1" name="bi1" value="1" required><label for="bi1_1">1</label></div>
+                <div class="likert-chip"><input type="radio" id="bi1_2" name="bi1" value="2" required><label for="bi1_2">2</label></div>
+                <div class="likert-chip"><input type="radio" id="bi1_3" name="bi1" value="3" required><label for="bi1_3">3</label></div>
+                <div class="likert-chip"><input type="radio" id="bi1_4" name="bi1" value="4" required><label for="bi1_4">4</label></div>
+                <div class="likert-chip"><input type="radio" id="bi1_5" name="bi1" value="5" required><label for="bi1_5">5</label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <label class="form-label">16. (BI2) I predict I will use LaTeX in the next 6 months.</label>
+            <div class="likert-container">
+              <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+              <div class="likert-options">
+                <div class="likert-chip"><input type="radio" id="bi2_1" name="bi2" value="1" required><label for="bi2_1">1</label></div>
+                <div class="likert-chip"><input type="radio" id="bi2_2" name="bi2" value="2" required><label for="bi2_2">2</label></div>
+                <div class="likert-chip"><input type="radio" id="bi2_3" name="bi2" value="3" required><label for="bi2_3">3</label></div>
+                <div class="likert-chip"><input type="radio" id="bi2_4" name="bi2" value="4" required><label for="bi2_4">4</label></div>
+                <div class="likert-chip"><input type="radio" id="bi2_5" name="bi2" value="5" required><label for="bi2_5">5</label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <label class="form-label">17. (BI3) I plan to use LaTeX in the next 6 months.</label>
+            <div class="likert-container">
+              <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+              <div class="likert-options">
+                <div class="likert-chip"><input type="radio" id="bi3_1" name="bi3" value="1" required><label for="bi3_1">1</label></div>
+                <div class="likert-chip"><input type="radio" id="bi3_2" name="bi3" value="2" required><label for="bi3_2">2</label></div>
+                <div class="likert-chip"><input type="radio" id="bi3_3" name="bi3" value="3" required><label for="bi3_3">3</label></div>
+                <div class="likert-chip"><input type="radio" id="bi3_4" name="bi3" value="4" required><label for="bi3_4">4</label></div>
+                <div class="likert-chip"><input type="radio" id="bi3_5" name="bi3" value="5" required><label for="bi3_5">5</label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- F. UB -->
+        <div id="sectionUB" class="d-none">
+          <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">
+            F. Use Behavior (UB) 
+            <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted);">(For Current/Past LaTeX Users)</span>
+          </h3>
+
+          <div class="q-card">
+            <label class="form-label">18. (UB1) I use LaTeX frequently in my teaching practice.</label>
+            <div class="likert-container">
+              <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+              <div class="likert-options">
+                <div class="likert-chip"><input type="radio" id="ub1_1" name="ub1" value="1"><label for="ub1_1">1</label></div>
+                <div class="likert-chip"><input type="radio" id="ub1_2" name="ub1" value="2"><label for="ub1_2">2</label></div>
+                <div class="likert-chip"><input type="radio" id="ub1_3" name="ub1" value="3"><label for="ub1_3">3</label></div>
+                <div class="likert-chip"><input type="radio" id="ub1_4" name="ub1" value="4"><label for="ub1_4">4</label></div>
+                <div class="likert-chip"><input type="radio" id="ub1_5" name="ub1" value="5"><label for="ub1_5">5</label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="q-card">
+            <label class="form-label">19. (UB2) I currently use LaTeX to prepare a significant portion of my instructional materials (e.g., 50% or more).</label>
+            <div class="likert-container">
+              <div class="likert-legend"><span>1 - Strongly Disagree</span><span>3 - Neutral</span><span>5 - Strongly Agree</span></div>
+              <div class="likert-options">
+                <div class="likert-chip"><input type="radio" id="ub2_1" name="ub2" value="1"><label for="ub2_1">1</label></div>
+                <div class="likert-chip"><input type="radio" id="ub2_2" name="ub2" value="2"><label for="ub2_2">2</label></div>
+                <div class="likert-chip"><input type="radio" id="ub2_3" name="ub2" value="3"><label for="ub2_3">3</label></div>
+                <div class="likert-chip"><input type="radio" id="ub2_4" name="ub2" value="4"><label for="ub2_4">4</label></div>
+                <div class="likert-chip"><input type="radio" id="ub2_5" name="ub2" value="5"><label for="ub2_5">5</label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" id="backToStep3">← Back</button>
+          <button type="button" class="btn btn-primary" id="goToStep5">Proceed to Part III →</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: PART III -->
+      <div id="step5" class="wizard-step">
+        <h2 class="section-title">Part III: Feedback</h2>
+
+        <div class="form-group">
+          <label class="form-label">1. Please briefly explain why you would or would not consider using LaTeX in your mathematics instruction:</label>
+          <textarea id="feedbackReason" name="feedbackReason" class="form-control" rows="4" placeholder="Share your thoughts..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">2. What do you perceive to be the most significant barrier to the adoption of LaTeX for instructional purposes?</label>
+          <textarea id="feedbackBarrier" name="feedbackBarrier" class="form-control" rows="4" placeholder="Describe the main barrier..." required></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" id="backToStep4">← Back</button>
+          <button type="button" class="btn btn-primary" id="submitBtn">Submit Response</button>
+        </div>
+      </div>
+
+      <!-- STEP 6: THANK YOU -->
+      <div id="step6" class="wizard-step">
+        <div class="q-card text-center" style="border-top: 4px solid var(--accent-teal); padding: 24px;">
+          <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 8px;">🎉 Thank You for Your Participation!</h2>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Your response has been successfully recorded and will contribute significantly to this study.
+          </p>
+
+          <div class="share-card share-card-pulsate" style="position: relative; background: #f8fafc; border-radius: 8px; padding: 16px; text-align: left; margin-top: 15px;">
+            
+            <button type="button" id="copyShareBtn" class="btn-shimmer" style="position: absolute; top: 12px; right: 12px; padding: 6px 12px; font-size: 0.82rem; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: background 0.2s;">
+              📋 <span id="copyBtnText">Copy Message</span>
+            </button>
+
+            <strong class="share-header-glow" style="font-size: 0.9rem; margin-bottom: 10px;">
+              📢 Help Us Reach More Math Teachers:
+            </strong>
+
+            <textarea id="shareTextMessage" readonly rows="7" style="width: 100%; border: none; background: transparent; font-family: inherit; font-size: 0.88rem; color: var(--text-main); resize: none; outline: none; line-height: 1.5;"></textarea>
+          </div>
+
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 14px;">
+            Please feel free to forward this invitation via Messenger, Viber, or Email to other High School Mathematics Teachers in Catanduanes.
+          </p>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

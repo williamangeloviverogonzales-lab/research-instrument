@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey Responses Dashboard | CatSU Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .table-container {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    th {
+      background: #f8fafc;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    tr:hover {
+      background: #f1f5f9;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .table-responsive {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+  </style>
+  <style>
+    /* Enables smooth horizontal scrolling for wide full-column tables */
+    .table-responsive, .table-container {
+      overflow-x: auto;
+      max-width: 100%;
+      display: block;
+    }
+    table {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body style="padding-bottom: 40px;">
+
+  <div class="survey-container" style="max-width: 1000px;">
+    
+    <header class="survey-header">
+      <div class="institution-title">Catanduanes State University — Graduate School</div>
+      <h1 class="survey-title">Survey Responses Dashboard</h1>
+      <span class="target-badge">LaTeX Adoption Study Data Monitoring</span>
+    </header>
+
+    <div class="top-bar">
+      <h2 class="section-title">Overview Metrics</h2>
+      <div>
+        <button id="refreshBtn" class="btn btn-secondary" style="min-width: auto; padding: 8px 14px;">🔄 Refresh</button>
+        <button id="exportCsvBtn" class="btn btn-primary" style="padding: 8px 14px;">📥 Export CSV (for R/SPSS)</button>
+      </div>
+    </div>
+
+    <div id="duplicateAlertCard" class="stat-card" style="border-left: 4px solid #f59e0b; display: none; text-align: left; margin-bottom: 20px;">
+      <h3 style="font-size: 1rem; color: #b45309; margin-bottom: 6px;">⚠️ Potential Duplicate Submissions Detected</h3>
+      <ul id="duplicateList" style="margin: 0; padding-left: 18px; font-size: 0.9rem; color: var(--text-muted);">
+        </ul>
+    </div>
+
+    <div class="dashboard-grid">
+      <div id="cardTotal" class="stat-card" onclick="setCardFilter('all')" style="cursor: pointer; transition: transform 0.1s, border-color 0.2s;">
+        <div id="totalResponses" class="stat-number">0</div>
+        <div class="stat-label">Total Submissions (Show All)</div>
+      </div>
+      <div id="cardLatex" class="stat-card" onclick="setCardFilter('latex')" style="cursor: pointer; transition: transform 0.1s, border-color 0.2s;">
+        <div id="latexUsersCount" class="stat-number">0</div>
+        <div class="stat-label">LaTeX Users</div>
+      </div>
+      <div id="cardNonLatex" class="stat-card" onclick="setCardFilter('non-latex')" style="cursor: pointer; transition: transform 0.1s, border-color 0.2s;">
+        <div id="nonLatexUsersCount" class="stat-number">0</div>
+        <div class="stat-label">Non-LaTeX Users</div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-bottom: 12px;">Recent Submissions</h2>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>School</th>
+            <th>Municipality</th>
+            <th>Used LaTeX?</th>
+            <th>Primary IM Method</th>
+          </tr>
+        </thead>
+        <tbody id="responseTableBody">
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading survey responses...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
