@@ -8,7 +8,11 @@
   ],
   "routes": [
     {
-      "src": "/(styles.css|app.js|assets/.*)",
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(styles.css|app.js|dashboard.js|db.json)",
       "dest": "/$1"
     },
     {
