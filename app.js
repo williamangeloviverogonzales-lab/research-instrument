@@ -63,7 +63,7 @@ Whether you are a regular LaTeX user, have tried it before, or have NEVER used i
 ⏱️ Time required: 10-15 minutes
 🔗 Link to survey: ${window.location.href}
 
-Thank you for supporting graduate school research in our division!`;
+Thank you for your support!`;
 
   const surveyForm = document.getElementById('surveyForm');
 
