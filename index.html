@@ -996,31 +996,34 @@ x^2, & \text{if } x \ge 0 \\
         </div>
       </div>
 
-      <div id="step6" class="wizard-step">
-      <div class="q-card text-center" style="border-top: 4px solid var(--accent-teal); padding: 24px;">
-        <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 8px;">🎉 Thank You for Your Participation!</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">
-        Your response has been successfully recorded and will contribute significantly to this study.
-        </p>
+      <!-- STEP 6: THANK YOU -->
+<div id="step6" class="wizard-step">
+  <div class="q-card text-center" style="border-top: 4px solid var(--accent-teal); padding: 24px;">
+    <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 8px;">🎉 Thank You for Your Participation!</h2>
+    <p style="color: var(--text-muted); margin-bottom: 20px;">
+      Your response has been successfully recorded and will contribute significantly to this study.
+    </p>
 
-        <div class="share-card share-card-pulsate" style="position: relative; background: #f8fafc; border-radius: 8px; padding: 16px; text-align: left; margin-top: 15px;">
+    <!-- EDIT THIS DIV BELOW (Added padding-top and min-height to increase box size) -->
+    <div class="share-card share-card-pulsate" style="position: relative; background: #f8fafc; border-radius: 8px; padding: 24px 16px 16px 16px; min-height: 220px; text-align: left; margin-top: 15px;">
       
-        <button type="button" id="copyShareBtn" class="btn-shimmer" style="position: absolute; top: 12px; right: 12px; padding: 6px 12px; font-size: 0.82rem; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: background 0.2s;">
+      <button type="button" id="copyShareBtn" class="btn-shimmer" style="position: absolute; top: 16px; right: 12px; padding: 6px 12px; font-size: 0.82rem; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: background 0.2s;">
         📋 <span id="copyBtnText">Copy Message</span>
-        </button>
+      </button>
 
-        <strong class="share-header-glow" style="display: block; font-size: 0.9rem; margin-bottom: 12px; padding-right: 140px;">
+      <strong class="share-header-glow" style="display: block; font-size: 0.9rem; margin-bottom: 12px; padding-right: 140px;">
         📢 Help Us Reach More Math Teachers:
-        </strong>
+      </strong>
 
-        <textarea id="shareTextMessage" readonly rows="7" style="width: 100%; border: none; background: transparent; font-family: inherit; font-size: 0.88rem; color: var(--text-main); resize: none; outline: none; line-height: 1.5;"></textarea>
-        </div>
-
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 14px;">
-        Please feel free to forward this invitation via Messenger, Viber, or Email to other High School Mathematics Teachers in Catanduanes.
-        </p>
-      </div>
+      <!-- You can also increase the rows here to make the text area taller inside the box -->
+      <textarea id="shareTextMessage" readonly rows="8" style="width: 100%; border: none; background: transparent; font-family: inherit; font-size: 0.88rem; color: var(--text-main); resize: none; outline: none; line-height: 1.5;"></textarea>
     </div>
+
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 14px;">
+      Please feel free to forward this invitation via Messenger, Viber, or Email to other High School Mathematics Teachers in Catanduanes.
+    </p>
+  </div>
+</div>
 
     </form>
   </div>
